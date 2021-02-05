@@ -1,4 +1,15 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import { Input, Button,Layout, Menu, Breadcrumb , Row, Col } from 'ant-design-vue'
 
-createApp(App).mount('#app')
+
+const app = createApp(App)
+app.use(Input)
+   .use(Layout)
+   .use(Button)
+   .use(Breadcrumb)
+   .use(Menu)
+   .use(Row)
+   .use(Col)
+
+app.mount('#app')
