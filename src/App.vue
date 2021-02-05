@@ -1,5 +1,5 @@
 <template>
-  <a-layout id="components-layout-demo-top-side-2">
+   <a-layout id="components-layout-demo-top-side-2">
     <a-layout-header class="header">
       <div class="logo" />
       <a-menu
@@ -17,13 +17,18 @@
       <a-layout-sider width="150" style="background: #fff">
         <a-menu
           mode="inline"
-          v-model:selectedKeys="selectedKeys1"
-          v-model:openKeys="openKeys"
+          :selectedKeys="selectedKeys1"
           :style="{ height: '100%', borderRight: 0 }"
         >
 
-            <a-menu-item key="1">Basic Info2222</a-menu-item>
-            <a-menu-item key="2">offline</a-menu-item>
+            <a-menu-item key="">
+              Home
+              <router-link to="/"/>
+            </a-menu-item>
+            <a-menu-item key="offline">
+                offline
+                <router-link to="/offline"/>
+            </a-menu-item>
             <a-menu-item key="3">option3</a-menu-item>
             <a-menu-item key="4">option4</a-menu-item>
             <a-menu-item key="5">option5</a-menu-item>
@@ -46,8 +51,7 @@
             minHeight: '280px',
           }"
         >
-        <offline />
-
+        <router-view/>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -67,17 +71,26 @@
 
 
 <script>
-import { defineComponent } from "vue";
-import offline from "@/components/offline.vue";
+import { defineComponent, ref, watch } from "vue";
+import { useRoute } from 'vue-router'
 export default defineComponent({
-  components: { offline },
+  name: "App",
+  setup() {
+    const selectedKeys1 = ref([""]);
+    const selectedKeys2 = ref(["21"]);
+    const openKeys = ref(["sub1"])
 
-  data() {
+    // 监测路由，选中对应导航菜单项
+    const route = useRoute()
+    watch(() => route.path, (newValue) => {
+      selectedKeys1.value = [newValue.substring(1)]
+    })
+
     return {
-      selectedKeys1: ["1"],
-      selectedKeys2: ["21"],
-      openKeys: ["sub1"],
-    };
+      selectedKeys1,
+      selectedKeys2,
+      openKeys,
+    }
   },
 
 });

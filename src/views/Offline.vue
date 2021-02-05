@@ -46,6 +46,6 @@ export default defineComponent({
       startBattle,
     };
   },
-  name: "offline",
+  name: "Offline",
 });
 </script>
