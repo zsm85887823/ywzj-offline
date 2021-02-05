@@ -22,7 +22,7 @@
           :style="{ height: '100%', borderRight: 0 }"
         >
 
-            <a-menu-item key="1">Basic Info</a-menu-item>
+            <a-menu-item key="1">Basic Info2222</a-menu-item>
             <a-menu-item key="2">offline</a-menu-item>
             <a-menu-item key="3">option3</a-menu-item>
             <a-menu-item key="4">option4</a-menu-item>
