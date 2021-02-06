@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://134.175.16.92:2555'
+    baseURL: 'http://www.yunyingxiaowu.com/foodie-api/'
 })
 
 //请求拦截
