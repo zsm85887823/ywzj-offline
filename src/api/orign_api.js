@@ -2,7 +2,7 @@ import { get } from '@/util/request';
 
 const orignApis = {
     startTask() {
-        return get("/gameChara/queryMapList", )
+        return get("http://www.yunyingxiaowu.com:8088/foodie-api/gameChara/queryMapList")
     }
 }
 
