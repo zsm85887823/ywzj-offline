@@ -64,7 +64,7 @@
       title="Title"
       :visible="visible"
       :confirm-loading="confirmLoading"
-      @ok="handleOk"
+      @ok="logingame"
       @cancel="handleCancel"
     >
       <a-input-group size="default">
@@ -73,7 +73,7 @@
             <p>账号：</p>
           </a-col>
           <a-col :span="18">
-            <a-input v-model:value="userForm.userid" />
+            <a-input v-model:value="userForm.username" />
           </a-col>
         </a-row>
         <a-row :gutter="10">
@@ -81,7 +81,7 @@
             <p>密码：</p>
           </a-col>
           <a-col :span="18">
-            <a-input v-model:value="userForm.userpwd" />
+            <a-input v-model:value="userForm.password" />
           </a-col>
         </a-row>
       </a-input-group>
@@ -103,66 +103,72 @@
 
 
 <script>
-import { defineComponent, ref, watch, reactive} from "vue";
+import { defineComponent, ref, watch, reactive } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import { orignApis } from "@/api";
 export default defineComponent({
   name: "App",
 
-  methods: {
-    showModal() {
+  mounted() {
+    this.visible = true;
+  },
+  setup() {
+    const store = useStore();
+    const userForm = reactive({
+      username: "Andy",
+      password: "zsm85887823",
+    });
+    const selectedKeys1 = ref(["home"]);
+    const selectedKeys2 = ref(["21"]);
+    const visible = ref(false);
+    const ModalText = ref("请先登录");
+    const confirmLoading = ref(false);
+    const showModal = () => {
       this.visible = true;
-    },
-
-
-    handleOk() {
+    };
+    const handleCancel = () => {
+      console.log("Clicked cancel button");
+      this.visible = false;
+    };
+    const logingame = async () => {
+      try {
+        const res = await orignApis.login(userForm);
+        store.state.user1.login = res;
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
       this.ModalText = "登陆中。。。";
       this.confirmLoading = true;
+
       setTimeout(() => {
         this.visible = false;
         this.confirmLoading = false;
-      }, 2000);
-    },
-    handleCancel() {
-      console.log("Clicked cancel button");
-        this.visible = false;
-    },
-},
-    mounted() {
-      this.visible = true;
-    },
-    setup() {
-      const store = useStore();
-      const userForm = reactive({
-        userid: "Andy",
-        userpwd: "zsm85887823",
-      });
-      store.state.user1 = userForm;
-      const selectedKeys1 = ref(["home"]);
-      const selectedKeys2 = ref(["21"]);
-      const visible = ref(false);
-      const ModalText = ref("请先登录");
-      const confirmLoading = ref(false);
+      }, 1000);
+    };
 
-      // 监测路由，选中对应导航菜单项
-      const route = useRoute();
-      watch(
-        () => route.path,
-        (newValue) => {
-          selectedKeys1.value = [newValue.substring(1)];
-        }
-      );
+    // 监测路由，选中对应导航菜单项
+    const route = useRoute();
+    watch(
+      () => route.path,
+      (newValue) => {
+        selectedKeys1.value = [newValue.substring(1)];
+      }
+    );
 
-      return {
-        selectedKeys1,
-        selectedKeys2,
-        visible,
-        ModalText,
-        confirmLoading,
-        userForm,
-      };
-    },
-
+    return {
+      selectedKeys1,
+      selectedKeys2,
+      visible,
+      ModalText,
+      confirmLoading,
+      userForm,
+      logingame,
+      showModal,
+      handleCancel,
+    };
+  },
 });
 </script>
 

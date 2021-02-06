@@ -43,7 +43,7 @@ export default defineComponent({
     });
     const startBattle = async () => {
       try {
-        const res = await orignApis.startTask();
+        const res = await orignApis.queryMapList();
         store.state.map = res;
         console.log(res);
       } catch (error) {
