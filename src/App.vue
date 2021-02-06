@@ -103,7 +103,7 @@
 
 
 <script>
-import { defineComponent, ref, watch, reactive } from "vue";
+import { defineComponent, ref, watch, reactive} from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 export default defineComponent({
@@ -113,9 +113,7 @@ export default defineComponent({
     showModal() {
       this.visible = true;
     },
-    mounted() {
-      this.visible = true;
-    },
+
 
     handleOk() {
       this.ModalText = "登陆中。。。";
@@ -129,7 +127,10 @@ export default defineComponent({
       console.log("Clicked cancel button");
         this.visible = false;
     },
-
+},
+    mounted() {
+      this.visible = true;
+    },
     setup() {
       const store = useStore();
       const userForm = reactive({
@@ -161,7 +162,7 @@ export default defineComponent({
         userForm,
       };
     },
-  },
+
 });
 </script>
 
