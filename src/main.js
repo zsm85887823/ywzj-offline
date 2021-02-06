@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { Input, Button,Layout, Menu, Breadcrumb , Row, Col } from 'ant-design-vue'
+import { Input, Button, Layout, Menu, Breadcrumb, Row, Col, Modal } from 'ant-design-vue'
 import router from '@/router'
 import store from '@/store'
 
@@ -12,6 +12,7 @@ app.use(Input)
    .use(Menu)
    .use(Row)
    .use(Col)
+   .use(Modal)
    .use(router)
    .use(store)
 

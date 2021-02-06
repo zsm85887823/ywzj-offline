@@ -32,7 +32,7 @@
             offline
             <router-link to="/Test" />
           </a-menu-item>
-          <a-menu-item key="3">option3</a-menu-item>
+          <a-menu-item key="3" @click="showModal">option3</a-menu-item>
           <a-menu-item key="4">option4</a-menu-item>
           <a-menu-item key="5">option5</a-menu-item>
           <a-menu-item key="6">option6</a-menu-item>
@@ -58,6 +58,36 @@
       </a-layout>
     </a-layout>
   </a-layout>
+
+  <div>
+    <a-modal
+      title="Title"
+      :visible="visible"
+      :confirm-loading="confirmLoading"
+      @ok="handleOk"
+      @cancel="handleCancel"
+    >
+      <a-input-group size="default">
+        <a-row :gutter="10">
+          <a-col :span="8">
+            <p>账号：</p>
+          </a-col>
+          <a-col :span="18">
+            <a-input v-model:value="userForm.userid" />
+          </a-col>
+        </a-row>
+        <a-row :gutter="10">
+          <a-col :span="8">
+            <p>密码：</p>
+          </a-col>
+          <a-col :span="18">
+            <a-input v-model:value="userForm.userpwd" />
+          </a-col>
+        </a-row>
+      </a-input-group>
+      <p>{{ ModalText }}</p>
+    </a-modal>
+  </div>
 </template>
 
 
@@ -73,13 +103,40 @@
 
 
 <script>
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch, reactive } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "App",
+  methods: {
+    showModal() {
+      this.visible = true;
+    },
+    handleOk() {
+      this.ModalText = "登陆中。。。";
+      this.confirmLoading = true;
+      setTimeout(() => {
+        this.visible = false;
+        this.confirmLoading = false;
+      }, 2000);
+    },
+    handleCancel() {
+      console.log("Clicked cancel button");
+      this.visible = false;
+    },
+  },
   setup() {
+    const store = useStore();
+    const userForm = reactive({
+      userid: "Andy",
+      userpwd: "zsm85887823",
+    });
+    store.state.user1 = userForm;
     const selectedKeys1 = ref(["home"]);
     const selectedKeys2 = ref(["21"]);
+    const visible = ref(false);
+    const ModalText = ref("请先登录");
+    const confirmLoading = ref(false);
 
     // 监测路由，选中对应导航菜单项
     const route = useRoute();
@@ -93,6 +150,10 @@ export default defineComponent({
     return {
       selectedKeys1,
       selectedKeys2,
+      visible,
+      ModalText,
+      confirmLoading,
+      userForm,
     };
   },
 });
