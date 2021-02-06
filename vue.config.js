@@ -6,7 +6,7 @@ function resolve(dir) {
 }
 
 module.exports = {
-    // 自定义webpack配置
+  // 自定义webpack配置
   configureWebpack: {
     resolve: {
       alias: {

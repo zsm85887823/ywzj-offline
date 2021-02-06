@@ -18,7 +18,7 @@
 
 <script>
 import { defineComponent , reactive} from "vue";
-import battleTaskApis from "@/api/battle_task";
+import battleTaskApis from "@/api";
 export default defineComponent({
   methods: {
     onCollapse(collapsed, type) {
