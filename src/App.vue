@@ -114,38 +114,56 @@ export default defineComponent({
     this.visible = true;
   },
   setup() {
-    const store = useStore();
+    const { user1 } = useStore().state;
     const userForm = reactive({
       username: "Andy",
       password: "zsm85887823",
     });
     const selectedKeys1 = ref(["home"]);
     const selectedKeys2 = ref(["21"]);
+
+    //弹窗登录部分
     const visible = ref(false);
     const ModalText = ref("请先登录");
     const confirmLoading = ref(false);
     const showModal = () => {
-      this.visible = true;
+      visible.value = true;
     };
     const handleCancel = () => {
-      console.log("Clicked cancel button");
-      this.visible = false;
+      visible.value = false;
     };
-    const logingame = async () => {
+    const getGameCharacter = async () => {
       try {
-        const res = await orignApis.login(userForm);
-        store.state.user1.login = res;
+        const res = await orignApis.getGameCharacter({charaId: user1.charaId});
+        user1.getGameCharacter = res;
         console.log(res);
       } catch (error) {
         console.log(error);
       }
-      this.ModalText = "登陆中。。。";
-      this.confirmLoading = true;
-
-      setTimeout(() => {
-        this.visible = false;
-        this.confirmLoading = false;
-      }, 1000);
+      };
+    const logingame = async () => {
+      try {
+        const res = await orignApis.login(userForm);
+        user1.login = res;
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+      ModalText.value = "登陆中。。。";
+      if (user1.login.status == 200) {
+        user1.charaId = user1.login.data.charaId;
+        confirmLoading.value = true;
+        setTimeout(() => {
+          visible.value = false;
+          confirmLoading.value = false;
+        }, 300);
+        console.log(user1)
+        getGameCharacter();
+      } else {
+        confirmLoading.value = false;
+        visible.value = true;
+        ModalText.value = user1.login.msg;
+      }
     };
 
     // 监测路由，选中对应导航菜单项
