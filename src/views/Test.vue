@@ -18,7 +18,7 @@
 
 <script>
 import { defineComponent , reactive} from "vue";
-import orignApis from "@/api";
+import { orignApis } from "@/api";
 export default defineComponent({
   methods: {
     onCollapse(collapsed, type) {
