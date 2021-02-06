@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { Input, Button,Layout, Menu, Breadcrumb , Row, Col } from 'ant-design-vue'
-import VueRouter from 'vue-router'
+import router from '@/router'
 
 const app = createApp(App)
 app.use(Input)
@@ -11,6 +11,6 @@ app.use(Input)
    .use(Menu)
    .use(Row)
    .use(Col)
-   .use(VueRouter)
+   .use(router)
 
 app.mount('#app')
