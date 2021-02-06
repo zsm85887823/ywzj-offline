@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { Input, Button,Layout, Menu, Breadcrumb , Row, Col } from 'ant-design-vue'
 import router from '@/router'
+import store from '@/store'
 
 const app = createApp(App)
 app.use(Input)
@@ -12,5 +13,6 @@ app.use(Input)
    .use(Row)
    .use(Col)
    .use(router)
+   .use(store)
 
 app.mount('#app')

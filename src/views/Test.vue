@@ -12,6 +12,11 @@
           >提交</a-button
         >
       </a-col>
+      <a-col :span="3">
+        <a-button type="primary" html-type="submit" @click="test"
+          >提交</a-button
+        >
+      </a-col>
     </a-row>
   </a-input-group>
 </template>
@@ -19,6 +24,7 @@
 <script>
 import { defineComponent , reactive} from "vue";
 import { orignApis } from "@/api";
+import { useStore } from 'vuex'
 export default defineComponent({
   methods: {
     onCollapse(collapsed, type) {
@@ -29,6 +35,8 @@ export default defineComponent({
     },
   },
   setup() {
+    const store = useStore();
+
     const battleForm = reactive({
       chara_id: "aa",
       map_id: 11,
@@ -36,14 +44,20 @@ export default defineComponent({
     const startBattle = async () => {
       try {
         const res = await orignApis.startTask();
+        store.state.map = res;
         console.log(res);
       } catch (error) {
         console.log(error);
       }
     };
+
+    const test = () => {
+      console.log(store.state.map.data);
+    }
     return {
       battleForm,
       startBattle,
+      test
     };
   },
   name: "Test",
