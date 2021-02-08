@@ -22,7 +22,7 @@
         >
           <a-menu-item key="home">
             Home
-            <router-link to="/home" />
+            <router-link to="home" />
           </a-menu-item>
           <a-menu-item key="offline">
             offline
@@ -53,7 +53,7 @@
             minHeight: '280px',
           }"
         >
-          <router-view />
+          <router-view></router-view>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -132,15 +132,7 @@ export default defineComponent({
     const handleCancel = () => {
       visible.value = false;
     };
-    const getGameCharacter = async () => {
-      try {
-        const res = await orignApis.getGameCharacter({charaId: user1.charaId});
-        user1.getGameCharacter = res;
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-      };
+
     const logingame = async () => {
       try {
         const res = await orignApis.login(userForm);
@@ -157,8 +149,6 @@ export default defineComponent({
           visible.value = false;
           confirmLoading.value = false;
         }, 300);
-        console.log(user1)
-        getGameCharacter();
       } else {
         confirmLoading.value = false;
         visible.value = true;
@@ -171,6 +161,7 @@ export default defineComponent({
     watch(
       () => route.path,
       (newValue) => {
+        console.log(newValue.substring(1))
         selectedKeys1.value = [newValue.substring(1)];
       }
     );

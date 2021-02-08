@@ -3,26 +3,38 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref } from "vue";
 import { useStore } from "vuex";
+import { orignApis } from "@/api";
 export default defineComponent({
   name: "Home",
-  setup() {
 
+
+  setup() {
     const { user1 } = useStore().state;
     const charnickname = ref("玩家名称");
-    if (user1.getGameCharacter) {
-      charnickname.value = user1.getGameCharacter.data.name
-    }
-    watch(
-      () => user1.getGameCharacter,
-      (newValue) => {
-        charnickname.value = newValue.data.name
+
+    const getGameCharacter = async () => {
+      try {
+        const res = await orignApis.getGameCharacter({
+          charaId: user1.charaId,
+        });
+        user1.getGameCharacter = res;
+        charnickname.value = user1.getGameCharacter.data.name
+        console.log(user1);
+      } catch (error) {
+        console.log(error);
       }
-    );
+    };
+
+    if(user1.charaId){getGameCharacter();}
+
+
+
 
     return {
       charnickname,
+      getGameCharacter,
     };
   },
 });
