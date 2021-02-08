@@ -8,7 +8,7 @@
         v-model:selectedKeys="selectedKeys2"
         :style="{ lineHeight: '64px' }"
       >
-        <a-menu-item key="21"> nav 1 </a-menu-item>
+        <a-menu-item key="21">{{ nickname }} </a-menu-item>
         <a-menu-item key="22"> nav 2 </a-menu-item>
         <a-menu-item key="23"> nav 3 </a-menu-item>
       </a-menu>
@@ -32,16 +32,7 @@
             offline
             <router-link to="/Test" />
           </a-menu-item>
-          <a-menu-item key="3" @click="showModal">option3</a-menu-item>
-          <a-menu-item key="4">option4</a-menu-item>
-          <a-menu-item key="5">option5</a-menu-item>
-          <a-menu-item key="6">option6</a-menu-item>
-          <a-menu-item key="7">option7</a-menu-item>
-          <a-menu-item key="8">option8</a-menu-item>
-          <a-menu-item key="9">option9</a-menu-item>
-          <a-menu-item key="10">option10</a-menu-item>
-          <a-menu-item key="11">option11</a-menu-item>
-          <a-menu-item key="12">option12</a-menu-item>
+
         </a-menu>
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">
@@ -123,6 +114,7 @@ export default defineComponent({
     });
     const selectedKeys1 = ref(["home"]);
     const selectedKeys2 = ref(["21"]);
+    var nickname = ref("玩家1");
 
     //弹窗登录部分
 
@@ -138,6 +130,17 @@ export default defineComponent({
     } else {
       showModal();
     }
+    //监听角色名称
+    user1.nickname = "";
+    watch(
+      () => user1.nickname,
+      (newvalue) => {
+
+        newvalue=user1.nickname
+        nickname.value = newvalue;
+
+      }
+    );
 
     const handleCancel = () => {
       visible.value = false;
@@ -188,6 +191,7 @@ export default defineComponent({
       logingame,
       showModal,
       handleCancel,
+      nickname,
     };
   },
 });
