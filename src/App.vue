@@ -22,7 +22,7 @@
         >
           <a-menu-item key="home">
             Home
-            <router-link to="home" />
+            <router-link :to="{ path: 'home' }" />
           </a-menu-item>
           <a-menu-item key="offline">
             offline
@@ -107,11 +107,13 @@ import { defineComponent, ref, watch, reactive } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { orignApis } from "@/api";
+import router from "@/router/index.js";
 export default defineComponent({
   name: "App",
 
   mounted() {
     this.visible = true;
+    router.push("404");
   },
   setup() {
     const { user1 } = useStore().state;
@@ -123,12 +125,20 @@ export default defineComponent({
     const selectedKeys2 = ref(["21"]);
 
     //弹窗登录部分
-    const visible = ref(false);
+
+    const visible = ref(true);
     const ModalText = ref("请先登录");
     const confirmLoading = ref(false);
     const showModal = () => {
       visible.value = true;
     };
+    console.log(user1.charaId);
+    if (user1.charaId) {
+      visible.value = false;
+    } else {
+      showModal();
+    }
+
     const handleCancel = () => {
       visible.value = false;
     };
@@ -145,10 +155,12 @@ export default defineComponent({
       if (user1.login.status == 200) {
         user1.charaId = user1.login.data.charaId;
         confirmLoading.value = true;
+        router.push("404");
         setTimeout(() => {
           visible.value = false;
           confirmLoading.value = false;
-        }, 300);
+          router.push("home");
+        }, 1000);
       } else {
         confirmLoading.value = false;
         visible.value = true;
@@ -161,7 +173,7 @@ export default defineComponent({
     watch(
       () => route.path,
       (newValue) => {
-        console.log(newValue.substring(1))
+        console.log(newValue.substring(1));
         selectedKeys1.value = [newValue.substring(1)];
       }
     );

@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ charnickname }}</h1>
+  <h2>{{ charnickname }}</h2>
 </template>
 
 <script>
@@ -8,7 +8,6 @@ import { useStore } from "vuex";
 import { orignApis } from "@/api";
 export default defineComponent({
   name: "Home",
-
 
   setup() {
     const { user1 } = useStore().state;
@@ -20,17 +19,16 @@ export default defineComponent({
           charaId: user1.charaId,
         });
         user1.getGameCharacter = res;
-        charnickname.value = user1.getGameCharacter.data.name
+        charnickname.value = user1.getGameCharacter.data.name;
         console.log(user1);
       } catch (error) {
         console.log(error);
       }
     };
 
-    if(user1.charaId){getGameCharacter();}
-
-
-
+    if (user1.charaId) {
+      getGameCharacter();
+    }
 
     return {
       charnickname,

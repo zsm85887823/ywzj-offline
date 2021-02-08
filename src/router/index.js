@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
 import Offline from "../views/Offline";
 import Test from "../views/Test";
-
+import Wait from "../views/404";
 const history = createWebHistory();
 
 const routes = [
@@ -20,7 +20,7 @@ const routes = [
     },
     {
         path: "/404",
-        component: 404,
+        component: Wait,
     }
 ]
 
