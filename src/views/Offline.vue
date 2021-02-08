@@ -1,49 +1,33 @@
 <template>
-  <a-input-group size="default，">
-    <a-row :gutter="10">
-      <a-col :span="3">
-        <a-input v-model:value="battleForm.chara_id" />
-      </a-col>
-      <a-col :span="3">
-        <a-input v-model:value="battleForm.map_id" />
-      </a-col>
-      <a-col :span="3">
-        <a-button type="primary" html-type="submit" @click="startBattle"
-          >提交</a-button
-        >
-      </a-col>
-    </a-row>
-  </a-input-group>
+  <router-view></router-view>
 </template>
 
 <script>
-import { defineComponent , reactive} from "vue";
+import { defineComponent } from "vue";
 import { battleTaskApis } from "@/api";
+import router from "@/router/index.js";
+import { useStore } from "vuex";
 export default defineComponent({
-  methods: {
-    onCollapse(collapsed, type) {
-      console.log(collapsed, type);
-    },
-    onBreakpoint(broken) {
-      console.log(broken);
-    },
-  },
   setup() {
-    const battleForm = reactive({
-      chara_id: "aa",
-      map_id: 11,
-    });
-    const startBattle = async () => {
+    const { user1 } = useStore().state;
+    const status = async () => {
       try {
-        const res = await battleTaskApis.startTask(battleForm);
+        const res = await battleTaskApis.status(user1.charaId);
         console.log(res);
+        if (res.status == 0) {
+          router.push("offline_status");
+        } else {
+          router.push("offline_start");
+        }
       } catch (error) {
         console.log(error);
       }
     };
+    status();
+
     return {
-      battleForm,
-      startBattle,
+      status,
+      user1,
     };
   },
   name: "Offline",

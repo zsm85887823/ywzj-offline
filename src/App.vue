@@ -9,8 +9,6 @@
         :style="{ lineHeight: '64px' }"
       >
         <a-menu-item key="21">{{ nickname }} </a-menu-item>
-        <a-menu-item key="22"> nav 2 </a-menu-item>
-        <a-menu-item key="23"> nav 3 </a-menu-item>
       </a-menu>
     </a-layout-header>
     <a-layout>
@@ -21,16 +19,12 @@
           :style="{ height: '100%', borderRight: 0 }"
         >
           <a-menu-item key="home">
-            Home
+            人物信息
             <router-link :to="{ path: 'home' }" />
           </a-menu-item>
           <a-menu-item key="offline">
-            offline
+            离线战斗
             <router-link to="/offline" />
-          </a-menu-item>
-          <a-menu-item key="test">
-            offline
-            <router-link to="/Test" />
           </a-menu-item>
 
         </a-menu>
@@ -52,7 +46,7 @@
 
   <div>
     <a-modal
-      title="Title"
+      title="登录"
       :visible="visible"
       :confirm-loading="confirmLoading"
       @ok="logingame"
@@ -103,14 +97,15 @@ export default defineComponent({
   name: "App",
 
   mounted() {
+    document.title="永无止境-离线版"
     this.visible = true;
     router.push("404");
   },
   setup() {
     const { user1 } = useStore().state;
     const userForm = reactive({
-      username: "Andy",
-      password: "zsm85887823",
+      username: "",
+      password: "",
     });
     const selectedKeys1 = ref(["home"]);
     const selectedKeys2 = ref(["21"]);

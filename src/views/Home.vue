@@ -1,7 +1,7 @@
 <template>
   <a-row :gutter="10">
     <a-col :span="6">
-      <h2>{{ userinfo.charnickname+"------" }} 等级：{{ userinfo.level }}</h2>
+      <h2>{{ userinfo.charnickname + "------" }} 等级：{{ userinfo.level }}</h2>
     </a-col>
     <a-col :span="6">
       <h2>装备</h2>
@@ -28,11 +28,11 @@
         {{ userinfo.magicAttack }}
       </h1>
       <h1>
-        暴击率：{{ userinfo.criticalHitValue }} 暴击伤害：
-        {{ userinfo.critDamage }}
+        暴击率：{{ userinfo.criticalHitValue +"%"}} 暴击伤害：
+        {{ userinfo.critDamage +"%" }}
       </h1>
       <h1>
-        命中率：{{ userinfo.hitRate }} 闪避率： {{ userinfo.evade }}速度：
+        命中率：{{ userinfo.hitRate  +"%"}} 闪避率： {{ userinfo.evade  +"%"}}速度：
         {{ userinfo.movingSpeed }}
       </h1>
       <h1>
@@ -41,8 +41,8 @@
       </h1>
     </a-col>
     <a-col :span="10">
-      <p v-for="(item) in userinfo.getCharaEquip" v-bind:key="item" >
-        {{  item.equitName+"-" +item.typeDec}}
+      <p v-for="item in userinfo.getCharaEquip" v-bind:key="item">
+        {{ item.equitName + "-" + item.typeDec }}
       </p>
     </a-col>
   </a-row>
@@ -101,10 +101,10 @@ export default defineComponent({
         userinfo.magicAttack = user1.getGameCharacter.data.magicAttack;
         userinfo.defense = user1.getGameCharacter.data.defense;
         userinfo.criticalHitValue =
-          user1.getGameCharacter.data.criticalHitValue;
-        userinfo.critDamage = user1.getGameCharacter.data.critDamage;
-        userinfo.hitRate = user1.getGameCharacter.data.hitRate;
-        userinfo.evade = user1.getGameCharacter.data.evade;
+          user1.getGameCharacter.data.criticalHitValue * 100;
+        userinfo.critDamage = user1.getGameCharacter.data.critDamage * 100;
+        userinfo.hitRate = user1.getGameCharacter.data.hitRate * 100;
+        userinfo.evade = user1.getGameCharacter.data.evade * 100;
         userinfo.movingSpeed = user1.getGameCharacter.data.movingSpeed;
         userinfo.physique = user1.getGameCharacter.data.physique;
         userinfo.spirit = user1.getGameCharacter.data.spirit;
@@ -141,7 +141,7 @@ export default defineComponent({
       try {
         const res = await orignApis.getCharaEquip("charaId=" + user1.charaId);
         user1.getCharaEquip = res;
-        userinfo.getCharaEquip=user1.getCharaEquip.data
+        userinfo.getCharaEquip = user1.getCharaEquip.data;
         console.log(user1);
         //定义
 
