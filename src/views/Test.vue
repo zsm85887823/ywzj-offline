@@ -51,8 +51,7 @@ export default defineComponent({
     const queryMapList = async () => {
       try {
         const res = await orignApis.queryMapList();
-        map = res.data;
-
+        map=res.data ;
         console.log(map);
       } catch (error) {
         console.log(error);
