@@ -22,14 +22,14 @@ const actions = {
             originApis.login({username, password}).then(res => {
                 const { data } = res;
                 commit("SET_CURRENT_ACCOUNT", data);
-                resolve();
+                resolve(data);
             }).catch(err => {
                 reject(err);
             });
         });
     },
     // 添加账户
-    addAcccount({ commit, state}, account) {
+    addAcccount({ commit, state }, account) {
         const { accountList } = state;
         accountList.push(account);
         commit("SET_ACCOUNT_LIST", accountList);
