@@ -1,10 +1,14 @@
 <template>
-  <a-table :columns="columns" :data-source="dataSource" :pagination="false">
-    <template #name="{ text }"
-      >{{ text.nickName }} {{ text.nickName }}</template
-    >
+  <a-table :columns="columns" :data-source="dataSource" rowKey="columnId" :pagination="false">
+    <template #name="{ text }">
+      {{ text.nickName }}
+    </template>
+    <template #action>
+      <a>action</a>
+    </template>
   </a-table>
 </template>
+
 
 <script>
 import { defineComponent } from "vue";
