@@ -1,10 +1,15 @@
 <template>
-  <a-table :columns="columns" :data-source="dataSource" rowKey="columnId" :pagination="false">
+  <a-table
+    :columns="columns"
+    :data-source="dataSource"
+    rowKey="columnId"
+    :pagination="false"
+  >
     <template #name="{ text }">
       {{ text.nickName }}
     </template>
     <template #action>
-      <a>action</a>
+      <a>设为当前</a>
     </template>
   </a-table>
 </template>
@@ -30,7 +35,16 @@ const columns = [
     dataIndex: "password",
     width: "20%",
   },
+  {
+    title: 'Action',
+    key: 'action',
+    width: "15%",
+    slots: {
+      customRender: 'action',
+    },
+  },
 ];
+
 export default defineComponent({
   name: "AccountList",
   setup() {

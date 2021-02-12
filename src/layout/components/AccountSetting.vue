@@ -10,7 +10,11 @@
       <a-col :span="11">
         <h3 style="text-align: center">账户列表</h3>
         <span v-show="accountList && accountList.length == 0">尚无账户</span>
-        <AccountList />
+        <ul>
+          <li v-for="item in accounts.accounts" v-bind:key="item.nickName">
+            {{ item.nickName }}
+          </li>
+        </ul>
       </a-col>
       <a-col :span="2">
         <a-divider type="vertical" style="height: 100%" />
@@ -47,21 +51,16 @@ import { defineComponent, reactive, ref, watch } from "vue";
 import { message } from "ant-design-vue";
 import { useStore } from "vuex";
 import { originApis } from "@/api";
-import AccountList from "./AccountList";
 
 export default defineComponent({
   name: "AccountSetting",
   props: {
     visiable: Boolean,
   },
-
-  visiable: true,
-  components: {
-    AccountList,
-  },
   setup(props) {
     const store = useStore();
     const accountList = ref(store.getters.accountList || []);
+    var accounts = reactive({ accounts: [] });
 
     const account = reactive({
       username: "miyling",
@@ -71,15 +70,14 @@ export default defineComponent({
     const addAccount = async () => {
       try {
         const res = await originApis.login(account);
-
         store.dispatch("account/addAcccount", {
           ...account,
           nickName: res.data.nickname,
         });
         message.info("账号：“" + res.data.nickname + "”已添加成功");
+        accounts.accounts = store.state.account.accountList;
 
         console.log(res);
-
       } catch (err) {
         console.log(err);
       }
@@ -97,6 +95,7 @@ export default defineComponent({
       accountList,
       account,
       addAccount,
+      accounts,
     };
   },
 });
