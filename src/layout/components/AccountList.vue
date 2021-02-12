@@ -31,7 +31,7 @@ export default defineComponent({
   name: "AccountList",
   setup() {
     const store = useStore();
-    console.log(store.state.account.accountList.nickName);
+
     const dataSource = store.state.account.accountList;
     return {
       columns,

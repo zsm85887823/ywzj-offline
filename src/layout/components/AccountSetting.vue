@@ -79,7 +79,7 @@ export default defineComponent({
         message.info("账号：“" + res.data.nickname + "”已添加成功");
 
         console.log(res);
-        console.log(store.state.account.accountList)
+
       } catch (err) {
         console.log(err);
       }

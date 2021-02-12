@@ -21,6 +21,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             originApis.login({username, password}).then(res => {
                 const { data } = res;
+                console.log(res)
                 commit("SET_CURRENT_ACCOUNT", data);
                 resolve(data);
             }).catch(err => {
