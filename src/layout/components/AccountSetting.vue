@@ -10,6 +10,7 @@
       <a-col :span="11">
         <h3 style="text-align: center">账户列表</h3>
         <span v-show="accountList && accountList.length == 0">尚无账户</span>
+        <AccountList />
       </a-col>
       <a-col :span="2">
         <a-divider type="vertical" style="height: 100%" />
@@ -43,13 +44,20 @@
 
 <script>
 import { defineComponent, reactive, ref, watch } from "vue";
+import { message } from "ant-design-vue";
 import { useStore } from "vuex";
 import { originApis } from "@/api";
+import AccountList from "./AccountList";
 
 export default defineComponent({
   name: "AccountSetting",
   props: {
     visiable: Boolean,
+  },
+
+  visiable: true,
+  components: {
+    AccountList,
   },
   setup(props) {
     const store = useStore();
@@ -68,8 +76,10 @@ export default defineComponent({
           ...account,
           nickName: res.data.nickname,
         });
+        message.info("账号：“" + res.data.nickname + "”已添加成功");
 
         console.log(res);
+        console.log(store.state.account.accountList)
       } catch (err) {
         console.log(err);
       }
@@ -77,7 +87,7 @@ export default defineComponent({
 
     watch(
       () => store.state.account.accountList,
-      (newV) => ((accountList.value = newV)),
+      (newV) => (accountList.value = newV),
 
       { deep: true }
     );

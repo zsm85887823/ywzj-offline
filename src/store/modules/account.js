@@ -33,6 +33,7 @@ const actions = {
         const { accountList } = state;
         accountList.push(account);
         commit("SET_ACCOUNT_LIST", accountList);
+
     }
 }
 
