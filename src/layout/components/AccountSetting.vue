@@ -11,13 +11,14 @@
         <h3 style="text-align: center">账户列表</h3>
         <span v-show="accountList && accountList.length == 0">尚无账户</span>
         <ul class="account-list">
-          <li
-            v-for="item in accountList"
-            v-bind:key="item.charaId"
-            @click="changeAccount(item)"
-          >
+          <li v-for="item in accountList" v-bind:key="item.charaId">
             {{ item.nickName }}
-            <a-button style="display: flex">设为当前</a-button>
+            <a-button
+              style="float: right"
+              size="small"
+              @click="changeAccount(item)"
+              >设为当前</a-button
+            >
           </li>
         </ul>
       </a-col>
@@ -73,24 +74,34 @@ export default defineComponent({
     });
     const changeAccount = (key) => {
       store.dispatch("account/changeAccount", key);
-      message.info("账号已切换成" + key.nickName);
+      message.info("账号已切换成：" + key.nickName);
     };
     const addAccount = async () => {
       try {
-        const res = await originApis.login(account);
-        if (res.status != 200) {
-          message.error(res.msg);
-          return;
-        }
-        store.dispatch("account/addAcccount", {
-          ...account,
-          nickName: res.data.nickname,
-          charaId: res.data.charaId,
-        });
-        message.info('账号："' + res.data.nickname + '"已添加成功');
         accounts.accounts = store.state.account.accountList;
+        let result = accounts.accounts.some((item) => {
+          if (item.username == account.username) {
+            return true;
+          }
+        });
+        if (result) {
+          message.info("账号已存在。请重新输入！！");
+        } else {
+          const res = await originApis.login(account);
+          if (res.status != 200) {
+            message.error(res.msg);
+            return;
+          }
+          store.dispatch("account/addAcccount", {
+            ...account,
+            nickName: res.data.nickname,
+            charaId: res.data.charaId,
+          });
+          message.info('账号："' + res.data.nickname + '"已添加成功');
+          accounts.accounts = store.state.account.accountList;
 
-        console.log(res);
+          console.log(res);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -120,7 +131,7 @@ export default defineComponent({
   padding: 5px;
   margin: 5px 0;
   border-radius: 4px;
-  display: flex;
+  display: block;
   align-items: center;
   border: 1px solid #000;
 }
