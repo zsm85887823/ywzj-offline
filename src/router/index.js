@@ -6,8 +6,14 @@ export const routes = [
     {
         path: "/",
         component: Layout,
-        redirect: "/basic-info",
+        redirect: "/welcome",
         children: [
+
+            {
+                path: "/",
+                name: "欢迎",
+                component: () => import("@/views/welcome"),
+            },
             {
                 path: "/basic-info",
                 name: "基础信息",

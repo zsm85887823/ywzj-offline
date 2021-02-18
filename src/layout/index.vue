@@ -17,11 +17,19 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header>
-        <div style="float: right">
-          <span style="color: #fff; margin-right: 10px"
-            >当前账户: {{ nickName }}</span
-          >
-          <a-button type="primary" @click="showSetting"> 账户管理 </a-button>
+        <div :span="15" style="float: right">
+          <a-row>
+            <a-col :span="16">
+              <span style="color: #fff; "
+                >当前账户: {{ nickName }}</span
+              ></a-col
+            >
+            <a-col :span="8">
+              <a-button type="primary" @click="showSetting">
+                账户管理
+              </a-button></a-col
+            >
+          </a-row>
         </div>
       </a-layout-header>
       <a-layout-content style="min-height: 85vh">
@@ -48,7 +56,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const { currentAccount, permission_routes } = store.getters;
-    const nickName = ref(currentAccount ? currentAccount.nickName : "尚无账户");
+    const nickName = ref(currentAccount ? currentAccount.nickName : "无");
     const chooseRoute = ref([permission_routes[0].path]);
 
     const visiable = ref(false);
