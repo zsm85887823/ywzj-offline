@@ -54,7 +54,13 @@
         <router-view />
       </a-layout-content>
       <a-layout-footer>
-        <span>Andy是🐷</span>
+        <span> 版权所有 © 2021 Andy </span
+        ><a
+          href="https://beian.miit.gov.cn/"
+          target="_blank"
+          title="苏ICP备18027276号"
+          ><span>苏ICP备18027276号</span></a
+        >
       </a-layout-footer>
     </a-layout>
   </a-layout>

@@ -1,10 +1,11 @@
 <template>
-  basic_info
+<br/>
+<br/>
   <a-row>
-    <a-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+    <a-col :xs="22" :sm="22" :md="22" :lg="8" :xl="8" :offset="1" align="left"  style="font-size: 0.15rem">
       <h2>
         {{ userinfo.getGameCharacter.name + "------" }} 等级：{{
-          userinfo.getGameCharacterActivity.level
+          userinfo.getGameCharacter.level
         }}
       </h2>
       <h1>
@@ -49,7 +50,12 @@
         {{ userinfo.getGameCharacter.reAttrPoint }}
       </h1>
     </a-col>
-    <a-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">col-12</a-col>
+    <a-col :xs="22" :sm="22" :md="22" :lg="8" :xl="8" :offset="1" align="left" style="font-size: 0.15rem">
+      <h2>装备</h2>
+      <h1 v-for="item in userinfo.getCharaEquip" v-bind:key="item">
+        {{ item.equitName + "-" + item.typeDec }}
+      </h1>
+    </a-col>
   </a-row>
 </template>
 
@@ -77,10 +83,7 @@ export default defineComponent({
         const res = await originApis.getGameCharacter({
           charaId: user.charaId,
         });
-        console.log(res);
         userinfo.getGameCharacter = res.data;
-
-        console.log(userinfo);
       } catch (error) {
         console.log(error);
       }
@@ -91,7 +94,14 @@ export default defineComponent({
           charaId: user.charaId,
         });
         userinfo.getGameCharacterActivity = res.data;
-        console.log(userinfo);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const getCharaEquip = async () => {
+      try {
+        const res = await originApis.getCharaEquip("charaId=" + user.charaId);
+        userinfo.getCharaEquip = res.data;
       } catch (error) {
         console.log(error);
       }
@@ -99,7 +109,7 @@ export default defineComponent({
     if (user.charaId) {
       getGameCharacter();
       getGameCharacterActivity();
-      //getCharaEquip();
+      getCharaEquip();
     } else {
       message.info("请先登录!或设为当前账号！");
       router.push("/welcome");
@@ -109,6 +119,7 @@ export default defineComponent({
       userinfo,
       getGameCharacter,
       getGameCharacterActivity,
+      getCharaEquip,
     };
   },
 });

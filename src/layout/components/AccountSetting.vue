@@ -48,10 +48,10 @@
           }"
         >
           <a-form-item label="账户名" name="username">
-            <a-input v-model:value="account.username" />
+            <a-input v-model:value="account.username"  placeholder="账号" />
           </a-form-item>
           <a-form-item label="密码" name="password">
-            <a-input v-model:value="account.password" type="password" />
+            <a-input v-model:value="account.password" type="password" placeholder="密码"/>
           </a-form-item>
         </a-form>
         <a-button
@@ -76,6 +76,7 @@ import { defineComponent, reactive, ref, watch } from "vue";
 import { message } from "ant-design-vue";
 import { useStore } from "vuex";
 import { originApis } from "@/api";
+import router from "@/router/index.js";
 
 export default defineComponent({
   name: "AccountSetting",
@@ -97,12 +98,13 @@ export default defineComponent({
     const currentAccount = ref(store.state.account.currentAccount.nickName);
 
     const account = reactive({
-      username: "miyling",
-      password: "miyling",
+      username: "",
+      password: "",
     });
     const changeAccount = (key) => {
       store.dispatch("account/changeAccount", key);
       message.info("账号已切换成：" + key.nickName);
+      router.push("/welcome");
     };
     const clearAccount = () => {
       store.state.account.accountList = [];
