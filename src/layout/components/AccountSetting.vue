@@ -32,8 +32,20 @@
           width="100%"
           :model="account"
           labelAlign="right"
-          :labelCol="{ sm: { span: 10 }, lg: { span: 4 } }"
-          :wrapperCol="{ sm: { span: 24 }, lg: { span: 20 } }"
+          :labelCol="{
+            xs: { span: 10 },
+            sm: { span: 10 },
+            md: { span: 10 },
+            lg: { span: 4 },
+            xl: { span: 4 },
+          }"
+          :wrapperCol="{
+            xs: { span: 24 },
+            sm: { span: 24 },
+            md: { span: 24 },
+            lg: { span: 20 },
+            xl: { span: 20 },
+          }"
         >
           <a-form-item label="账户名" name="username">
             <a-input v-model:value="account.username" />
@@ -74,15 +86,14 @@ export default defineComponent({
     const store = useStore();
     var accounts = reactive({ accounts: [] });
     const checkAccounts = () => {
-      if (localStorage.getItem("accounts")!="") {
+      if (localStorage.getItem("accounts") != "") {
         store.state.account.accountList = JSON.parse(
           localStorage.getItem("accounts")
         );
-
       }
     };
-    checkAccounts()
-    const accountList = ref(store.state.account.accountList|| []);
+    checkAccounts();
+    const accountList = ref(store.state.account.accountList || []);
     const currentAccount = ref(store.state.account.currentAccount.nickName);
 
     const account = reactive({
@@ -99,7 +110,6 @@ export default defineComponent({
     };
     const addAccount = async () => {
       try {
-
         accounts.accounts = store.state.account.accountList;
         let result = accounts.accounts.some((item) => {
           if (item.username == account.username) {

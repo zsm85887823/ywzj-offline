@@ -10,9 +10,9 @@ export const routes = [
         children: [
 
             {
-                path: "/",
+                path: "/welcome",
                 name: "欢迎",
-                component: () => import("@/views/welcome"),
+                component: () => import("@/views/welcome/index"),
             },
             {
                 path: "/basic-info",

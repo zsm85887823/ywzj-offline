@@ -17,20 +17,38 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header>
-        <div :span="15" style="float: right">
-          <a-row>
-            <a-col :span="16">
-              <span style="color: #fff; "
-                >当前账户: {{ nickName }}</span
-              ></a-col
+        <a-row>
+          <a-col
+            :xs="{ span: 8, offset: 0 }"
+            :sm="{ span: 8, offset: 0 }"
+            :md="{ span: 8, offset: 0 }"
+            :lg="{ span: 12, offset: 6 }"
+            :xl="{ span: 12, offset: 6 }"
+          >
+            <h1 style="color: #fff; font-size: 0.2rem">永无止境PLUS</h1>
+          </a-col>
+
+          <a-col
+            :xs="{ span: 10, offset: 0 }"
+            :sm="{ span: 10, offset: 0 }"
+            :md="{ span: 10, offset: 0 }"
+            :lg="{ span: 3, offset: 0 }"
+            :xl="{ span: 3, offset: 0 }"
+          >
+            <span style="color: #fff; font-size: 0.2rem"
+              >当前账户: {{ nickName }}</span
             >
-            <a-col :span="8">
-              <a-button type="primary" @click="showSetting">
-                账户管理
-              </a-button></a-col
-            >
-          </a-row>
-        </div>
+          </a-col>
+          <a-col
+            :xs="{ span: 4, offset: 0 }"
+            :sm="{ span: 4, offset: 0 }"
+            :md="{ span: 4, offset: 0 }"
+            :lg="{ span: 3, offset: 0 }"
+            :xl="{ span: 3, offset: 0 }"
+          >
+            <a-button type="primary" @click="showSetting"> 账户管理 </a-button>
+          </a-col>
+        </a-row>
       </a-layout-header>
       <a-layout-content style="min-height: 85vh">
         <router-view />
@@ -52,6 +70,14 @@ export default defineComponent({
   name: "Layout",
   components: {
     AccountSetting,
+  },
+  mounted() {
+    var html = document.getElementsByTagName("html")[0];
+    var oWidth =
+      document.body.clientWidth || document.documentElement.clientWidth;
+
+    html.style.fontSize =
+      ((Math.abs(oWidth - 1980) / 1.7 + oWidth) / 1980) * 100 + "px";
   },
   setup() {
     const store = useStore();
