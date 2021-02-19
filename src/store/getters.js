@@ -1,6 +1,6 @@
 const getters = {
-    accountList: state => state.accountList,
-    currentAccount: state => state.currentAccount,
+    accountList: state => state.account.accountList,
+    currentAccount: state => state.account.currentAccount,
     permission_routes: state => state.permission.routes,
 };
 

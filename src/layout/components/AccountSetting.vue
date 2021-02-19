@@ -86,7 +86,7 @@ export default defineComponent({
     const store = useStore();
     var accounts = reactive({ accounts: [] });
     const checkAccounts = () => {
-      if (localStorage.getItem("accounts") != "") {
+      if (localStorage.getItem("accounts")) {
         store.state.account.accountList = JSON.parse(
           localStorage.getItem("accounts")
         );
