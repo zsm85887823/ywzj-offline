@@ -32,8 +32,7 @@
         :pagination="paginationProps"
         :rowClassName="
           (record, index) => {
-            if (record.g_default_color == 1 ) {
-
+            if (record.g_default_color == 1) {
               return 'table-color-black';
             } else if (record.g_default_color == 2) {
               return 'table-color-yellow';
@@ -144,7 +143,7 @@ export default defineComponent({
 
     const paginationProps = {
       position: "both",
-      pageSize: "30",
+      pageSize: "15",
     };
     const goodsGet = async () => {
       try {
