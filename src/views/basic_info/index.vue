@@ -58,6 +58,7 @@
           shape="circle"
           size="small"
           v-if="userinfo.getGameCharacter.reAttrPoint != 0"
+          @click="addAttrPoint(1)"
         >
           +1</a-button
         >
@@ -68,6 +69,7 @@
           shape="circle"
           size="small"
           v-if="userinfo.getGameCharacter.reAttrPoint != 0"
+          @click="addAttrPoint(2)"
         >
           +1</a-button
         >
@@ -78,18 +80,14 @@
           shape="circle"
           size="small"
           v-if="userinfo.getGameCharacter.reAttrPoint != 0"
+          @click="addAttrPoint(3)"
         >
           +1</a-button
         >
       </p>
       <p>
         未分配点数： {{ userinfo.getGameCharacter.reAttrPoint }}
-        <a-button
-          size="small"
-          v-if="userinfo.getGameCharacter.reAttrPoint != 0"
-        >
-          确认分配点数</a-button
-        >
+        <a-button size="small" @click="updateAttrPoint"> 确认分配点数</a-button>
       </p>
     </a-col>
     <a-col
@@ -216,6 +214,7 @@ import { useStore } from "vuex";
 import { message } from "ant-design-vue";
 import { originApis } from "@/api";
 import router from "@/router/index.js";
+
 export default defineComponent({
   name: "basic_info",
 
@@ -258,7 +257,7 @@ export default defineComponent({
       }
     };
     const distinguishColor = (color) => {
-      if (color == "1") {
+      if (color == 1) {
         return "#000";
       } else if (color == 2) {
         return "#c5c52f";
@@ -276,6 +275,38 @@ export default defineComponent({
         return "#ff00c3e0";
       }
     };
+    const addAttrPoint = (Num) => {
+      if (Num == 1) {
+        userinfo.getGameCharacter.reAttrPoint =
+          userinfo.getGameCharacter.reAttrPoint - 1;
+        userinfo.getGameCharacter.physique =
+          userinfo.getGameCharacter.physique + 1;
+      } else if (Num == 2) {
+        userinfo.getGameCharacter.reAttrPoint =
+          userinfo.getGameCharacter.reAttrPoint - 1;
+        userinfo.getGameCharacter.dexterous =
+          userinfo.getGameCharacter.dexterous + 1;
+      } else {
+        userinfo.getGameCharacter.reAttrPoint =
+          userinfo.getGameCharacter.reAttrPoint - 1;
+        userinfo.getGameCharacter.spirit = userinfo.getGameCharacter.spirit + 1;
+      }
+    };
+    const updateAttrPoint = async () => {
+      try {
+        const res = await originApis.updateAttrPoint({
+          spirit:userinfo.getGameCharacter.spirit,
+          physique:userinfo.getGameCharacter.physique,
+          dexterous:userinfo.getGameCharacter.dexterous,
+          reAttrPoint:userinfo.getGameCharacter.reAttrPoint,
+          charaId: user.charaId,
+        });
+        message.info("分配属性点："+res.msg);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     if (user.charaId) {
       getGameCharacter();
       getGameCharacterActivity();
@@ -291,6 +322,8 @@ export default defineComponent({
       distinguishColor,
       getGameCharacterActivity,
       getCharaEquip,
+      updateAttrPoint,
+      addAttrPoint,
     };
   },
 });

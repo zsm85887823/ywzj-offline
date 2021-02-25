@@ -22,6 +22,21 @@
         >。否则无法使用。
       </h1>
     </a-col>
+        <a-col
+      :xs="22"
+      :sm="22"
+      :md="22"
+      :lg="8"
+      :xl="8"
+      :offset="1"
+      align="left"
+      style="font-size: 0.15rem"
+    >
+
+
+
+
+    </a-col>
   </a-row>
 </template>
 

@@ -21,11 +21,14 @@ const getGameCharacterActivity = (params) => {
 const getCharaEquip = (params) => {
     return post(`${serverAddr}/foodie-api/gameCharaEquip/getCharaEquip`, params)
 };
-
+const updateAttrPoint = (params) => {
+    return post(`${serverAddr}/foodie-api/gameChara/updateAttrPoint`, params)
+};
 export default {
     queryMapList,
     login,
     getGameCharacter,
     getGameCharacterActivity,
     getCharaEquip,
+    updateAttrPoint,
 }

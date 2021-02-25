@@ -23,6 +23,11 @@ export const routes = [
                 path: "/offline",
                 name: "离线战斗",
                 component: () => import("@/views/offline/index"),
+            },
+            {
+                path: "/littletools",
+                name: "设置&工具",
+                component: () => import("@/views/littletools/index"),
             }
         ]
     }

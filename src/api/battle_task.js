@@ -13,9 +13,13 @@ const taskStatus = (params) => {
 const taskStop = (params) => {
     return get(`${serverAddr}/battle_task/${params}/stop`);
 };
+const goodsget = () => {
+    return get(`/goods.json`);
+};
 
 export default {
     taskStart,
     taskStatus,
-    taskStop
+    taskStop,
+    goodsget,
 };
