@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import { Layout, Menu, Button, Row, Col, Modal, Divider, Form, Input, message, Table, Select, Popover ,Pagination} from 'ant-design-vue'
 const app = createApp(App)
-
+document.title = "永无止境PRO+"
 app.use(store)
     .use(router)
     .use(Layout)

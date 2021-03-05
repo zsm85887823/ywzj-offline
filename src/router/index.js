@@ -13,12 +13,16 @@ export const routes = [
                 path: "/welcome",
                 name: "欢迎",
                 component: () => import("@/views/welcome/index"),
+                meta: {
+                    title: '永无止境PRO+MAX'
+                }
             },
             {
                 path: "/basic-info",
                 name: "基础信息",
                 component: () => import("@/views/basic_info/index"),
             },
+            //{                path: "/bag",                name: "背包",                component: () => import("@/views/bag/index"),            },
             {
                 path: "/offline",
                 name: "离线战斗",

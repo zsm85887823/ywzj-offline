@@ -12,7 +12,36 @@
     >
       <br /><br />
       <h2>小工具</h2>
-      <a-button @click="goodsGet"> 掉率表格</a-button>
+      <p>
+        <a-button @click="goodsGet"> 掉率表格</a-button>
+      </p>
+      <h2>排行榜</h2>
+      <p style="display: run-in">
+        <a-button @click="coinRanking" style="margin-left: 10px">
+          金币排行榜</a-button
+        >
+        <a-button @click="moneyRanking" style="margin-left: 10px">
+          铜钱排行榜</a-button
+        >
+        <a-button @click="realmHeavenList" style="margin-left: 10px">
+          境界天榜</a-button
+        >
+        <a-button @click="realmLandList" style="margin-left: 10px">
+          境界地榜</a-button
+        >
+        <a-button @click="levelRanking" style="margin-left: 10px">
+          等级排行榜</a-button
+        >
+        <a-button @click="playerOnline" style="margin-left: 10px">
+          在线玩家</a-button
+        >
+        <a-button @click="oneDamageRanking" style="margin-left: 10px">
+          boss伤害排行榜(单次)</a-button
+        >
+        <a-button @click="totalDamageRanking" style="margin-left: 10px">
+          boss伤害排行榜(总计)</a-button
+        >
+      </p>
     </a-col>
     <a-col
       :xs="22"
@@ -23,7 +52,7 @@
       :offset="0"
       align="left"
       style="font-size: 0.15rem"
-      v-show="visibleGoods.goodsRate"
+      v-show="visibles[0].visible"
     >
       <h2>掉率统计表</h2>
       <a-table
@@ -49,7 +78,11 @@
             }
           }
         "
-        rowKey="gMapName"
+        :rowKey="
+          (record, index) => {
+            return index;
+          }
+        "
         size="small"
       >
         <template
@@ -120,13 +153,48 @@
         </template>
       </a-table>
     </a-col>
+    <a-col
+      :xs="22"
+      :sm="22"
+      :md="22"
+      :lg="8"
+      :xl="8"
+      :offset="1"
+      align="left"
+      style="font-size: 0.15rem"
+      v-show="visibles[1].visible"
+    >
+      <h2>{{ rankInfo.title }}</h2>
+
+      <h1 v-for="(item, index) in rankInfo.rankData" v-bind:key="item">
+        <a-popover trigger="hover" placement="leftTop">
+          <template #content>
+            <a-row>
+              <a-col style="font-size: 0.12rem; line-height: 2px">
+                <p>{{ "角色攻击力：" + item.attack }}</p>
+                <p>{{ "角色防御：" + item.defense }}</p>
+                <p>{{ "角色血量：" + item.health }}</p>
+                <p>{{ "角色灵式力：" + item.magic }}</p>
+                <p>{{ "角色真气值：" + item.mana }}</p>
+                <p>{{ "角色境界：" + item.realmName }}</p>
+                <p>{{ "角色铜钱：" + item.money }}</p>
+                <p>{{ "角色金币：" + item.coin }}</p>
+                <p>{{ "角色当前经验：" + item.exp }}</p>
+                <p>{{ "对boss的单次伤害：" + item.oneDamage }}</p>
+                <p>{{ "对boss的总伤害：" + item.totalDamage }}</p>
+                <p>{{ "BOSS伤害排行榜：" + item.gameCharaLevelBoList }}</p>
+              </a-col>
+            </a-row>
+          </template>
+          {{ index + 1 + ".LV" + item.level + item.name }}
+        </a-popover>
+      </h1>
+    </a-col>
   </a-row>
 </template>
 
-
-
 <script>
-import { battleTaskApis } from "@/api";
+import { battleTaskApis, originApis } from "@/api";
 import { SearchOutlined } from "@ant-design/icons-vue";
 import { defineComponent, reactive, ref } from "vue";
 
@@ -136,19 +204,32 @@ export default defineComponent({
     SearchOutlined,
   },
   setup() {
-    var visibleGoods = reactive({
-      goodsRate: false,
-    });
+    var visibles = reactive([
+      {
+        visible: false,
+      },
+      {
+        visible: false,
+      },
+    ]);
+    const hide = () => {
+      for (let index = 0; index < visibles.length; index++) {
+        visibles[index].visible = false;
+      }
+    };
     const data = ref([]);
+    const rankInfo = reactive({
+      rankData: [],
+      title: "",
+    });
 
     const paginationProps = {
-      position: "both",
-      pageSize: "15",
+      pageSize: 15,
     };
     const goodsGet = async () => {
       try {
         const res = await battleTaskApis.goodsget();
-        visibleGoods.goodsRate = true;
+        visibles[0].visible = true;
 
         data.value = res;
         console.log(data);
@@ -156,7 +237,102 @@ export default defineComponent({
         console.log(error);
       }
     };
-
+    const coinRanking = async () => {
+      try {
+        const res = await originApis.coinRanking();
+        hide();
+        visibles[1].visible = true;
+        rankInfo.title = "金币排行榜";
+        rankInfo.rankData = res.data;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const moneyRanking = async () => {
+      try {
+        const res = await originApis.moneyRanking();
+        hide();
+        visibles[1].visible = true;
+        rankInfo.title = "铜币排行榜";
+        rankInfo.rankData = res.data;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const realmLandList = async () => {
+      try {
+        const res = await originApis.realmLandList();
+        hide();
+        visibles[1].visible = true;
+        rankInfo.title = "境界地榜";
+        rankInfo.rankData = res.data;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const realmHeavenList = async () => {
+      try {
+        const res = await originApis.realmHeavenList();
+        hide();
+        visibles[1].visible = true;
+        rankInfo.title = "境界天榜";
+        rankInfo.rankData = res.data;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const levelRanking = async () => {
+      try {
+        const res = await originApis.levelRanking();
+        hide();
+        visibles[1].visible = true;
+        rankInfo.title = "等级排行榜";
+        rankInfo.rankData = res.data;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const playerOnline = async () => {
+      try {
+        const res = await originApis.playerOnline();
+        hide();
+        visibles[1].visible = true;
+        rankInfo.title = "在线玩家";
+        rankInfo.rankData = res.data;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const oneDamageRanking = async () => {
+      try {
+        const res = await originApis.oneDamageRanking();
+        hide();
+        visibles[1].visible = true;
+        rankInfo.title = "boss伤害排行榜(单次)";
+        rankInfo.rankData = res.data;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const totalDamageRanking = async () => {
+      try {
+        const res = await originApis.totalDamageRanking();
+        hide();
+        visibles[1].visible = true;
+        rankInfo.title = "boss伤害排行榜(总计)";
+        rankInfo.rankData = res.data;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     const state = reactive({
       searchText: "",
       searchedColumn: "",
@@ -227,17 +403,28 @@ export default defineComponent({
       clearFilters();
       state.searchText = "";
     };
+
     return {
       data,
+      rankInfo,
+      hide,
       columns,
       goodsGet,
-      visibleGoods,
+      visibles,
       handleSearch,
       handleReset,
       searchText: "",
       searchInput: null,
       searchedColumn: "",
       paginationProps,
+      moneyRanking,
+      coinRanking,
+      realmLandList,
+      realmHeavenList,
+      levelRanking,
+      playerOnline,
+      oneDamageRanking,
+      totalDamageRanking,
     };
   },
 });

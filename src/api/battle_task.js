@@ -1,6 +1,6 @@
 import { get, post } from "@/util/request";
 
-const serverAddr = "http://134.175.16.92:2555";
+const serverAddr = "http://106.52.122.211:2555";
 
 const taskStart = (params) => {
     return post(`${serverAddr}/battle_task`, params);

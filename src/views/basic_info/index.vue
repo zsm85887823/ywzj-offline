@@ -183,7 +183,7 @@
                     :style="{
                       color:
                         cz.affixLevel == 'T1'
-                          ? 'rgb(234 255 0)'
+                          ? 'rgb(	255,215,0)'
                           : 'rgb(73, 193, 248)',
                     }"
                   >
@@ -295,13 +295,13 @@ export default defineComponent({
     const updateAttrPoint = async () => {
       try {
         const res = await originApis.updateAttrPoint({
-          spirit:userinfo.getGameCharacter.spirit,
-          physique:userinfo.getGameCharacter.physique,
-          dexterous:userinfo.getGameCharacter.dexterous,
-          reAttrPoint:userinfo.getGameCharacter.reAttrPoint,
+          spirit: userinfo.getGameCharacter.spirit,
+          physique: userinfo.getGameCharacter.physique,
+          dexterous: userinfo.getGameCharacter.dexterous,
+          reAttrPoint: userinfo.getGameCharacter.reAttrPoint,
           charaId: user.charaId,
         });
-        message.info("分配属性点："+res.msg);
+        message.info("分配属性点：" + res.msg);
       } catch (error) {
         console.log(error);
       }
