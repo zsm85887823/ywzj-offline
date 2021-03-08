@@ -117,13 +117,28 @@
       <br /><br />
       <h2>背包</h2>
       <p>
+        <a-checkbox-group>
+
+              <a-checkbox>A</a-checkbox>
+
+
+              <a-checkbox>B</a-checkbox>
+
+
+              <a-checkbox>C</a-checkbox>
+
+
+              <a-checkbox>D</a-checkbox>
+
+        </a-checkbox-group>
         <a-row>
+
           <a-col v-for="item in baginfo.getCharaPackage" v-bind:key="item" :span="6" :style="{ color: distinguishColor(item.color) }">
             <a-popover trigger="hover" placement="bottomRight">
               <template #content>
                 <a-row>
-                  <a-col :span="12" ></a-col>
-                  <a-col :span="12" >
+                  <a-col :span="12"></a-col>
+                  <a-col :span="12">
                     <p style="margin:1px display:inline">
                       <a-button @click="useEquitBypackage(item.packItemId)" size="small">
                         装备
@@ -354,7 +369,7 @@ import { useStore } from "vuex";
 import { message } from "ant-design-vue";
 import { originApis } from "@/api";
 import router from "@/router/index.js";
-import {  LockOutlined } from '@ant-design/icons-vue';
+import { LockOutlined } from "@ant-design/icons-vue";
 export default defineComponent({
   name: "basic_info",
   components: {
@@ -433,7 +448,7 @@ export default defineComponent({
         console.log(error);
       }
     };
-        const oneClickSale = async (packItemId) => {
+    const oneClickSale = async (packItemId) => {
       try {
         const res = await originApis.oneClickSale(
           "charaId=" + user.charaId + "&packItemIds=" + packItemId
