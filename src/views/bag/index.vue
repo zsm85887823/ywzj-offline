@@ -140,9 +140,9 @@
                   </a-col>
                 </a-row>
                 <a-row>
-                  <a-col style="font-size: 0.08rem;" :span="12" :style="{ color: distinguishColor(baginfo.onbodyequip[item.kind].color) }">
+                  <a-col style="font-size: 0.12rem;" :span="12" :style="{ color: distinguishColor(baginfo.onbodyequip[item.kind].color) }">
 
-                    <p style="font-size: 0.1rem;margin:1px">
+                    <p style="font-size: 0.15rem;margin:1px">
                       {{ baginfo.onbodyequip[item.kind].equitName }}
                       <span v-if="baginfo.onbodyequip[item.kind].enhanLevel != 0">
                         +{{ baginfo.onbodyequip[item.kind].enhanLevel }}
@@ -238,9 +238,9 @@
                       {{ baginfo.onbodyequip[item.kind].skillDesc }}</p>
 
                   </a-col>
-                  <a-col style="font-size: 0.08rem;  " :span="12" :style="{ color: distinguishColor(item.color) }">
+                  <a-col style="font-size: 0.12rem;  " :span="12" :style="{ color: distinguishColor(item.color) }">
 
-                    <p style="font-size: 0.1rem;margin:1px">
+                    <p style="font-size: 0.15rem;margin:1px">
                       {{ item.itemName }}
                       <span v-if=" item.enhanLevel !=0">
                         +{{ item.enhanLevel }}
