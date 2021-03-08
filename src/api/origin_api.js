@@ -29,6 +29,28 @@ const updateAttrPoint = (params) => {
 const getCharaPackage = (params) => {
     return post(`${serverAddr}/foodie-api/gameChara/getCharaPackage`, params)
 };
+//鉴定装备
+const appraisalEquitBypackage = (params) => {
+    return post(`${serverAddr}/foodie-api/gameCharaEquip/appraisalEquitBypackage`, params)
+};
+//装备强化
+const equitStrengThen = (params) => {
+    return post(`${serverAddr}/foodie-api/gameCharaEquip/equitStrengThen`, params)
+};
+//使用背包中的装备
+const useEquitBypackage = (params) => {
+    return post(`${serverAddr}/foodie-api/gameCharaEquip/useEquitBypackage`, params)
+};
+//背包物品锁定
+const itemBind = (params) => {
+    return post(`${serverAddr}/foodie-api/gameMarket/itemBind`, params)
+};
+//一键出售
+const oneClickSale = (params) => {
+    return post(`${serverAddr}/foodie-api/gameCharaEquip/oneClickSale`, params)
+};
+
+
 //排行榜
 const coinRanking = () => {
     return post(`${serverAddr}/foodie-api/gamepassport/coinRanking`, )
@@ -59,6 +81,11 @@ const totalDamageRanking = () => {
 
 export default {
     queryMapList,
+    oneClickSale,
+    itemBind,
+    useEquitBypackage,
+    equitStrengThen,
+    appraisalEquitBypackage,
     login,
     getGameCharacter,
     getGameCharacterActivity,
