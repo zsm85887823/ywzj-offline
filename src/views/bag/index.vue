@@ -117,23 +117,17 @@
       <br /><br />
       <h2>背包</h2>
       <p>
-        <a-checkbox-group>
-
-              <a-checkbox>A</a-checkbox>
-
-
-              <a-checkbox>B</a-checkbox>
-
-
-              <a-checkbox>C</a-checkbox>
-
-
-              <a-checkbox>D</a-checkbox>
-
-        </a-checkbox-group>
+        品质：<a-select label-in-value ref="select" size="small" @change="filtercolor" placeholder="请选择品质">
+          <a-select-option v-bind:value="1">黑色</a-select-option>
+          <a-select-option v-bind:value="2">黄色</a-select-option>
+          <a-select-option v-bind:value="3">绿色</a-select-option>
+          <a-select-option v-bind:value="4">蓝色</a-select-option>
+          <a-select-option v-bind:value="5">紫色</a-select-option>
+          <a-select-option v-bind:value="6">红色</a-select-option>
+          <a-select-option v-bind:value="7">橙色</a-select-option>
+        </a-select>
         <a-row>
-
-          <a-col v-for="item in baginfo.getCharaPackage" v-bind:key="item" :span="6" :style="{ color: distinguishColor(item.color) }">
+          <a-col v-for="item in fliterbagequip" v-bind:key="item" :span="6" :style="{ color: distinguishColor(item.color) }">
             <a-popover trigger="hover" placement="bottomRight">
               <template #content>
                 <a-row>
@@ -364,7 +358,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import { useStore } from "vuex";
 import { message } from "ant-design-vue";
 import { originApis } from "@/api";
@@ -381,6 +375,7 @@ export default defineComponent({
       getCharaEquip: [],
       onbodyequip: [],
     });
+    var filterbagequip = ref([]);
     const store = useStore();
     const user = store.state.account.currentAccount;
     const distinguishColor = (color) => {
@@ -401,6 +396,14 @@ export default defineComponent({
       } else {
         return "#ff00c3e0";
       }
+    };
+
+    const filtercolor = (value) => {
+      filterbagequip = baginfo.getCharaPackage.filter(
+        (item) => item.color == value.value
+      );
+      console.log(value);
+      console.log(filterbagequip);
     };
     const getCharaEquip = async () => {
       try {
@@ -502,6 +505,8 @@ export default defineComponent({
     }
     return {
       getCharaPackage,
+      filterbagequip,
+      filtercolor,
       oneClickSale,
       itemBind,
       equitStrengThen,
