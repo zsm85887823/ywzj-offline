@@ -1,25 +1,11 @@
 <template>
-<br/><br/>
+  <br /><br />
   <a-row>
     <a-col v-show="visiable.visiable" :offset=1 style="font-size: 0.15rem">
-      <a-select
-        label-in-value
-        ref="select"
-        style="width: 300px"
-        size="small"
-        @change="handleChange"
-        placeholder="请选择地图"
-      >
-        <a-select-option
-          v-for="item in map.mapinfo"
-          v-bind:key="item.mapName"
-          v-bind:value="item.mapId"
-          >{{ item.mapName + item.minLv + "-" + item.maxLv }}</a-select-option
-        >
+      <a-select label-in-value ref="select" style="width: 300px" size="small" @change="handleChange" placeholder="请选择地图">
+        <a-select-option v-for="item in map.mapinfo" v-bind:key="item.mapName" v-bind:value="item.mapId">{{ item.mapName + item.minLv + "-" + item.maxLv }}</a-select-option>
       </a-select>
-      <a-button type="primary" html-type="submit" @click="start_offline"
-        >开始离线</a-button
-      >
+      <a-button type="primary" html-type="submit" @click="start_offline">开始离线</a-button>
     </a-col>
     <a-col v-show="!visiable.visiable" :offset=1 style="font-size: 0.15rem" align="left">
       <h2>离线状态查看</h2>
@@ -33,9 +19,7 @@
       <h1>获得物品总数：{{ offlinestatus.status.goods_total }}</h1>
       <h1>真实经验总数：{{ offlinestatus.status.start_exp }}</h1>
       <br />
-      <a-button type="primary" html-type="submit" @click="stop_offline"
-        >停止</a-button
-      >
+      <a-button type="primary" html-type="submit" @click="stop_offline">停止</a-button>
     </a-col>
   </a-row>
 </template>
@@ -96,7 +80,7 @@ export default defineComponent({
         battleForm.map_id = map.mapchoosed - 1 + 1;
         const res = await battleTaskApis.taskStart(battleForm);
         console.log(res);
-        message.info("离线战斗已开始！")
+        message.info("离线战斗已开始！");
         checkstatus();
       } catch (error) {
         console.log(error);
@@ -107,7 +91,7 @@ export default defineComponent({
         const res = await battleTaskApis.taskStop(user.charaId);
 
         console.log(res);
-        message.info("离线战斗已停止！")
+        message.info("离线战斗已停止！");
         checkstatus();
       } catch (error) {
         console.log(error);

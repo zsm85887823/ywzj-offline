@@ -117,7 +117,9 @@
       <br /><br />
       <h2>背包</h2>
       <p>
-        品质：<a-select label-in-value ref="select" size="small" @change="filtercolor" placeholder="请选择品质">
+        <a-button @click="resetfilter">重置</a-button>
+        品质
+        <a-select label-in-value ref="select" @change="filtercolor" placeholder="请选择品质">
           <a-select-option v-bind:value="1">黑色</a-select-option>
           <a-select-option v-bind:value="2">黄色</a-select-option>
           <a-select-option v-bind:value="3">绿色</a-select-option>
@@ -125,9 +127,16 @@
           <a-select-option v-bind:value="5">紫色</a-select-option>
           <a-select-option v-bind:value="6">红色</a-select-option>
           <a-select-option v-bind:value="7">橙色</a-select-option>
+        </a-select>装备等级
+        <a-select label-in-value ref="select" @change="filterlevel" placeholder="装备等级">
+          <a-select-option v-for="item in baginfo.equiplevel" v-bind:value="item" v-bind:key="item">{{item}}</a-select-option>
+        </a-select>部位
+        <a-select label-in-value ref="select" @change="filterposition" placeholder="装备部位">
+          <a-select-option v-for="item in baginfo.equipposition" v-bind:value="item" v-bind:key="item">{{item}}</a-select-option>
         </a-select>
+        <a-button @click="sellequip">一键出售</a-button>
         <a-row>
-          <a-col v-for="item in fliterbagequip" v-bind:key="item" :span="6" :style="{ color: distinguishColor(item.color) }">
+          <a-col v-for="item in baginfo.filterbagequip" v-bind:key="item" :span="6" :style="{ color: distinguishColor(item.color) }">
             <a-popover trigger="hover" placement="bottomRight">
               <template #content>
                 <a-row>
@@ -374,6 +383,12 @@ export default defineComponent({
       getCharaPackage: [],
       getCharaEquip: [],
       onbodyequip: [],
+      filterbagequip: [],
+      filterlevel: 0,
+      filtercolor: 0,
+      filterposition: "",
+      equiplevel: [],
+      equipposition: [],
     });
     var filterbagequip = ref([]);
     const store = useStore();
@@ -397,13 +412,43 @@ export default defineComponent({
         return "#ff00c3e0";
       }
     };
-
+    const resetfilter = () => {
+      baginfo.filterlevel = 0;
+      baginfo.filtercolor = 0;
+      baginfo.filterposition = "";
+      bagfilter();
+    };
+    const filterlevel = (value) => {
+      baginfo.filterlevel = value.value;
+      bagfilter();
+    };
     const filtercolor = (value) => {
-      filterbagequip = baginfo.getCharaPackage.filter(
-        (item) => item.color == value.value
-      );
-      console.log(value);
-      console.log(filterbagequip);
+      baginfo.filtercolor = value.value;
+      bagfilter();
+    };
+    const filterposition = (value) => {
+      baginfo.filterposition = value.value;
+      bagfilter();
+    };
+    const bagfilter = () => {
+      if (baginfo.filtercolor == 0) {
+        baginfo.filterbagequip = baginfo.getCharaPackage;
+      } else {
+        baginfo.filterbagequip = baginfo.getCharaPackage.filter(
+          (item) => item.color == baginfo.filtercolor
+        );
+      }
+      if (baginfo.filterlevel != 0) {
+        baginfo.filterbagequip = baginfo.filterbagequip.filter(
+          (item) => item.level == baginfo.filterlevel
+        );
+      }
+      if (baginfo.filterposition != "") {
+        baginfo.filterbagequip = baginfo.filterbagequip.filter(
+          (item) => item.typeDec == baginfo.filterposition
+        );
+      }
+      console.log(baginfo);
     };
     const getCharaEquip = async () => {
       try {
@@ -421,7 +466,19 @@ export default defineComponent({
       try {
         const res = await originApis.getCharaPackage("charaId=" + user.charaId);
         baginfo.getCharaPackage = res.data;
-        console.log(res);
+        baginfo.getCharaPackage.forEach((item) => {
+          if (baginfo.equiplevel.indexOf(item.level) == -1) {
+            baginfo.equiplevel.push(item.level);
+          }
+        });
+        baginfo.equiplevel.sort((a, b) => a - b);
+        baginfo.getCharaPackage.forEach((item) => {
+          if (baginfo.equipposition.indexOf(item.typeDec) == -1) {
+            baginfo.equipposition.push(item.typeDec);
+          }
+        });
+
+        bagfilter();
       } catch (error) {
         console.log(error);
       }
@@ -495,7 +552,22 @@ export default defineComponent({
         console.log(error);
       }
     };
-
+    const sellequip = async () => {
+      try {
+        var packItemId = "";
+        baginfo.filterbagequip.forEach((item) => {
+          packItemId = packItemId + item.packItemId + ",";
+        });
+        //packItemId=packItemId.substring(0,packItemId.length-1)
+        const res = await originApis.oneClickSale(
+          "charaId=" + user.charaId + "&packItemIds=" + packItemId
+        );
+        message.info(res.data);
+        getCharaPackage();
+      } catch (error) {
+        console.log(error);
+      }
+    };
     if (user.charaId) {
       getCharaPackage();
       getCharaEquip();
@@ -505,6 +577,11 @@ export default defineComponent({
     }
     return {
       getCharaPackage,
+      resetfilter,
+      sellequip,
+      filterposition,
+      bagfilter,
+      filterlevel,
       filterbagequip,
       filtercolor,
       oneClickSale,
