@@ -74,7 +74,7 @@
               <template #content>
                 <p style="white-space: nowrap; height: 24px">
                   <span>{{ item.skillName }}:</span>
-                  <a-Button @click="makeDownSkill(item.skillId,item.skillType)">
+                  <a-Button size="small" @click="makeDownSkill(item.skillId,item.skillType)">
                     脱下
                   </a-Button>
                 </p>
@@ -97,7 +97,7 @@
               <template #content>
                 <p style="white-space: nowrap; height: 24px">
                   <span>{{ item.skillName }}:</span>
-                  <a-Button @click="makeDownSkill(item.skillId,item.skillType)">
+                  <a-Button size="small" @click="makeDownSkill(item.skillId,item.skillType)">
                     脱下
                   </a-Button>
                 </p>
@@ -125,10 +125,10 @@
                   <template #content>
                     <p style="white-space: nowrap; ">
                       <span>{{ item.skillName }}
-                        <a-Button @click="makeSkill(item.skillId,item.skillType)">
+                        <a-Button size="small" @click="makeSkill(item.skillId,item.skillType)">
                           装备
                         </a-Button>
-                        <a-Button @click="upgradeSkill(item.skillId)" v-if="item.skillNextDesc">
+                        <a-Button size="small" @click="upgradeSkill(item.skillId)" v-if="item.skillNextDesc">
                           升级
                         </a-Button>
                       </span>
@@ -152,10 +152,10 @@
                   <template #content>
                     <p style="white-space: nowrap; ">
                       <span>{{ item.skillName }}
-                        <a-Button @click="makeSkill(item.skillId,item.skillType)">
+                        <a-Button size="small" @click="makeSkill(item.skillId,item.skillType)">
                           装备
                         </a-Button>
-                        <a-Button @click="upgradeSkill(item.skillId)" v-if="item.skillNextDesc">
+                        <a-Button size="small" @click="upgradeSkill(item.skillId)" v-if="item.skillNextDesc">
                           升级
                         </a-Button>
                       </span>

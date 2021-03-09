@@ -117,9 +117,9 @@
       <br /><br />
       <h2>背包</h2>
       <p>
-        <a-button @click="resetfilter">重置</a-button>
+        <a-button @click="resetfilter" size="small">重置</a-button>
         品质
-        <a-select label-in-value ref="select" @change="filtercolor" placeholder="请选择品质">
+        <a-select label-in-value ref="select" @change="filtercolor" placeholder="请选择品质" size="small">
           <a-select-option v-bind:value="1">黑色</a-select-option>
           <a-select-option v-bind:value="2">黄色</a-select-option>
           <a-select-option v-bind:value="3">绿色</a-select-option>
@@ -128,13 +128,13 @@
           <a-select-option v-bind:value="6">红色</a-select-option>
           <a-select-option v-bind:value="7">橙色</a-select-option>
         </a-select>装备等级
-        <a-select label-in-value ref="select" @change="filterlevel" placeholder="装备等级">
+        <a-select label-in-value ref="select" @change="filterlevel" placeholder="装备等级" size="small">
           <a-select-option v-for="item in baginfo.equiplevel" v-bind:value="item" v-bind:key="item">{{item}}</a-select-option>
         </a-select>部位
-        <a-select label-in-value ref="select" @change="filterposition" placeholder="装备部位">
+        <a-select label-in-value ref="select" @change="filterposition" placeholder="装备部位" size="small">
           <a-select-option v-for="item in baginfo.equipposition" v-bind:value="item" v-bind:key="item">{{item}}</a-select-option>
         </a-select>
-        <a-button @click="sellequip">一键出售</a-button>
+        <a-button @click="sellequip" size="small">一键出售</a-button>
         <a-row>
           <a-col v-for="item in baginfo.filterbagequip" v-bind:key="item" :span="6" :style="{ color: distinguishColor(item.color) }">
             <a-popover trigger="hover" placement="bottomRight">
