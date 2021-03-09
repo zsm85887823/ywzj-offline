@@ -49,6 +49,26 @@ const itemBind = (params) => {
 const oneClickSale = (params) => {
     return post(`${serverAddr}/foodie-api/gameCharaEquip/oneClickSale`, params)
 };
+//获取角色未生效的技能
+const getCharaSkill = (params) => {
+    return post(`${serverAddr}/foodie-api/gameCharaSkill/getCharaSkill`, params)
+};
+//获取角色已装备的技能
+const getCharaUseSkill = (params) => {
+    return post(`${serverAddr}/foodie-api/gameCharaSkill/getCharaUseSkill`, params)
+};
+//角色卸下技能(使用技能id)
+const makeDownSkill = (params) => {
+    return post(`${serverAddr}/foodie-api/gameCharaSkill/makeDownSkill`, params)
+};
+//角色装备技能(使用技能id)
+const makeSkill = (params) => {
+    return post(`${serverAddr}/foodie-api/gameCharaSkill/makeSkill`, params)
+};
+//角色升级技能(使用技能id)
+const upgradeSkill = (params) => {
+    return post(`${serverAddr}/foodie-api/gameCharaSkill/upgradeSkill`, params)
+};
 
 
 //排行榜
@@ -80,6 +100,11 @@ const totalDamageRanking = () => {
 
 
 export default {
+    getCharaSkill,
+    upgradeSkill,
+    getCharaUseSkill,
+    makeSkill,
+    makeDownSkill,
     queryMapList,
     oneClickSale,
     itemBind,
