@@ -1,4 +1,4 @@
-# limitless 永无止境
+# limitless 永无止境 PRO
 
 ## Project setup
 ```
