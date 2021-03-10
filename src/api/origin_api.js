@@ -73,8 +73,14 @@ const upgradeSkill = (params) => {
 const getCharaMaterial = (params) => {
     return post(`${serverAddr}/foodie-api/gameChara/getCharaMaterial`, params)
 };
-
-
+//整理角色的包裹材料
+const arrangeCharaMaterial = (params) => {
+    return post(`${serverAddr}/foodie-api/gameChara/arrangeCharaMaterial`, params)
+};
+//使用背包中的道具
+const usePropypackage = (params) => {
+    return post(`${serverAddr}/foodie-api/gameCharaEquip/usePropypackage`, params)
+};
 
 
 
@@ -108,6 +114,8 @@ const totalDamageRanking = () => {
 
 export default {
     getCharaSkill,
+    usePropypackage,
+    arrangeCharaMaterial,
     getCharaMaterial,
     upgradeSkill,
     getCharaUseSkill,
