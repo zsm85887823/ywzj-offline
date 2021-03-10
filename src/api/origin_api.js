@@ -69,6 +69,13 @@ const makeSkill = (params) => {
 const upgradeSkill = (params) => {
     return post(`${serverAddr}/foodie-api/gameCharaSkill/upgradeSkill`, params)
 };
+//获取角色的包裹材料
+const getCharaMaterial = (params) => {
+    return post(`${serverAddr}/foodie-api/gameChara/getCharaMaterial`, params)
+};
+
+
+
 
 
 //排行榜
@@ -101,6 +108,7 @@ const totalDamageRanking = () => {
 
 export default {
     getCharaSkill,
+    getCharaMaterial,
     upgradeSkill,
     getCharaUseSkill,
     makeSkill,
