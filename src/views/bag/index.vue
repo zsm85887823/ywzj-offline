@@ -6,7 +6,7 @@
         <a-popover trigger="hover" placement="bottomLeft">
           <template #content>
             <a-row>
-              <a-col style="font-size: 0.12rem; line-height: 2px" :style="{ color: distinguishColor(item.color) }">
+              <a-col style="font-size: 0.12rem;" :style="{ color: distinguishColor(item.color) }">
                 <p style="font-size: 0.2rem">
                   {{ item.equitName }}
                   <span v-if="item.enhanLevel != 0">
