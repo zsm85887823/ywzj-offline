@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { Layout, Menu, Button, Row, Col, Modal, Divider, Form, Input, message, Table, Select, Popover ,Pagination, Checkbox, Collapse,Radio} from 'ant-design-vue'
+import { Layout, Menu, Button, Row, Col, Modal, Divider, Form, Input, message, Table, Select, Popover, Pagination, Checkbox, Collapse, Radio ,InputNumber,List,Card} from 'ant-design-vue'
 const app = createApp(App)
 document.title = "永无止境PRO+"
 app.use(store)
@@ -19,6 +19,9 @@ app.use(store)
     .use(Table)
     .use(Select)
     .use(Pagination)
+    .use(InputNumber)
+    .use(List)
+    .use(Card)
     .use(Radio)
     .use(Popover)
     .use(Checkbox)

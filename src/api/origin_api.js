@@ -81,6 +81,15 @@ const arrangeCharaMaterial = (params) => {
 const usePropypackage = (params) => {
     return post(`${serverAddr}/foodie-api/gameCharaEquip/usePropypackage`, params)
 };
+//合成列表
+const getSyntheticList = () => {
+    return post(`${serverAddr}/foodie-api/gameRealm/getSyntheticList` )
+};
+//合成
+const breakThroughTheSynthetic = (params) => {
+    return post(`${serverAddr}/foodie-api/gameRealm/breakThroughTheSynthetic`, params)
+};
+
 
 
 
@@ -114,6 +123,8 @@ const totalDamageRanking = () => {
 
 export default {
     getCharaSkill,
+    breakThroughTheSynthetic,
+    getSyntheticList,
     usePropypackage,
     arrangeCharaMaterial,
     getCharaMaterial,
