@@ -83,46 +83,72 @@ const usePropypackage = (params) => {
 };
 //合成列表
 const getSyntheticList = () => {
-    return post(`${serverAddr}/foodie-api/gameRealm/getSyntheticList` )
+    return post(`${serverAddr}/foodie-api/gameRealm/getSyntheticList`)
 };
 //合成
 const breakThroughTheSynthetic = (params) => {
     return post(`${serverAddr}/foodie-api/gameRealm/breakThroughTheSynthetic`, params)
 };
+//获取境界加成
+const getRealmBonus = (params) => {
+    return post(`${serverAddr}/foodie-api/gameRealm/getRealmBonus`, params)
+};
+//获取突破境界金钱和材料
+const getCaiRealm = (params) => {
+    return post(`${serverAddr}/foodie-api/gameRealm/getCaiRealm`, params)
+};
+//突破境界
+const breakThroughTheRealm = (params) => {
+    return post(`${serverAddr}/foodie-api/gameRealm/breakThroughTheRealm`, params)
+};
+//商城信息列表
+const waresList = (params) => {
+    return post(`${serverAddr}/foodie-api/gameMarket/waresList`, params)
+};
+//购买物品接口
+const buyWares = (params) => {
+    return post(`${serverAddr}/foodie-api/gameMarket/buyWares`, params)
+};
+
 
 
 
 
 //排行榜
 const coinRanking = () => {
-    return post(`${serverAddr}/foodie-api/gamepassport/coinRanking`, )
+    return post(`${serverAddr}/foodie-api/gamepassport/coinRanking`,)
 };
 const moneyRanking = () => {
-    return post(`${serverAddr}/foodie-api/gamepassport/moneyRanking`, )
+    return post(`${serverAddr}/foodie-api/gamepassport/moneyRanking`,)
 };
 const realmLandList = () => {
-    return post(`${serverAddr}/foodie-api/gamepassport/realmLandList`, )
+    return post(`${serverAddr}/foodie-api/gamepassport/realmLandList`,)
 };
 const realmHeavenList = () => {
-    return post(`${serverAddr}/foodie-api/gamepassport/realmHeavenList`, )
+    return post(`${serverAddr}/foodie-api/gamepassport/realmHeavenList`,)
 };
 const levelRanking = () => {
-    return post(`${serverAddr}/foodie-api/gamepassport/levelRanking`, )
+    return post(`${serverAddr}/foodie-api/gamepassport/levelRanking`,)
 };
 const playerOnline = () => {
-    return post(`${serverAddr}/foodie-api/gamepassport/playerOnline`, )
+    return post(`${serverAddr}/foodie-api/gamepassport/playerOnline`,)
 };
 const oneDamageRanking = () => {
-    return post(`${serverAddr}/foodie-api/gamepassport/oneDamageRanking`, )
+    return post(`${serverAddr}/foodie-api/gamepassport/oneDamageRanking`,)
 };
 const totalDamageRanking = () => {
-    return post(`${serverAddr}/foodie-api/gamepassport/totalDamageRanking`, )
+    return post(`${serverAddr}/foodie-api/gamepassport/totalDamageRanking`,)
 };
 
 
 
 export default {
+    waresList,
+    buyWares,
     getCharaSkill,
+    breakThroughTheRealm,
+    getRealmBonus,
+    getCaiRealm,
     breakThroughTheSynthetic,
     getSyntheticList,
     usePropypackage,

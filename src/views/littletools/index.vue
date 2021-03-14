@@ -170,7 +170,7 @@
         <a-popover trigger="hover" placement="leftTop">
           <template #content>
             <a-row>
-              <a-col style="font-size: 0.12rem; line-height: 2px">
+              <a-col style="font-size: 0.12rem; ">
                 <p>{{ "角色攻击力：" + item.attack }}</p>
                 <p>{{ "角色防御：" + item.defense }}</p>
                 <p>{{ "角色血量：" + item.health }}</p>
@@ -192,7 +192,11 @@
     </a-col>
   </a-row>
 </template>
-
+<style >
+p {
+  margin: 1px;
+}
+</style>
 <script>
 import { battleTaskApis, originApis } from "@/api";
 import { SearchOutlined } from "@ant-design/icons-vue";

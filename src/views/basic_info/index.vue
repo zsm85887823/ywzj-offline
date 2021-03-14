@@ -13,17 +13,10 @@
         {{ userinfo.getGameCharacterActivity.upgradeExp }}
       </h1>
       <h1>
-        金币：{{ userinfo.getGameCharacterActivity.money }} 铜币：
+        铜币：{{ userinfo.getGameCharacterActivity.money }} 金币：
         {{ userinfo.getGameCharacterActivity.coin }}
       </h1>
-      <h1>
-        境界：{{ userinfo.getGameCharacter.realmName }} 境界经验：{{
-          userinfo.getGameCharacter.realmExp
-        }}/{{ userinfo.getGameCharacter.realmUpExp }}等级上限：{{
-          userinfo.getGameCharacter.levelCap
-        }}
-        级
-      </h1>
+
       <h1>
         生命值：{{ userinfo.getGameCharacter.health }} 魔法值：
         {{ userinfo.getGameCharacter.mana }}防御：
@@ -62,6 +55,78 @@
         未分配点数： {{ userinfo.getGameCharacter.reAttrPoint }}
         <a-button size="small" @click="updateAttrPoint"> 确认分配点数</a-button>
       </p>
+      <h1>
+        境界：{{ userinfo.getGameCharacter.realmName }} 境界经验：{{
+          userinfo.getGameCharacter.realmExp
+        }}/{{ userinfo.getGameCharacter.realmUpExp }}等级上限：{{
+          userinfo.getGameCharacter.levelCap
+        }}
+        级
+      </h1>
+      <p v-if=" userinfo.getRealmBonus.realmAttack">
+        <span>物理攻击加成</span>
+        {{ ( userinfo.getRealmBonus.realmAttack * 100).toFixed(2) || 0 }} %
+      </p>
+      <p v-if=" userinfo.getRealmBonus.realmMagicAttack">
+        <span>灵力攻击加成</span>
+        {{( userinfo.getRealmBonus.realmMagicAttack * 100).toFixed(2) || 0}}
+        %
+      </p>
+      <p v-if=" userinfo.getRealmBonus.realmHealth">
+        <span>血量加成</span>
+        {{ ( userinfo.getRealmBonus.realmHealth * 100).toFixed(2) || 0 }} %
+      </p>
+      <p v-if=" userinfo.getRealmBonus.realmMana">
+        <span>真气加成</span>
+        {{ ( userinfo.getRealmBonus.realmMana * 100).toFixed(2) || 0 }} %
+      </p>
+      <p v-if=" userinfo.getRealmBonus.realmDefense">
+        <span>防御加成</span>
+        {{ ( userinfo.getRealmBonus.realmDefense * 100).toFixed(2) || 0 }}
+        %
+      </p>
+      <p v-if=" userinfo.getRealmBonus.realmCriticalHit">
+        <span>暴击加成</span>
+        {{( userinfo.getRealmBonus.realmCriticalHit * 100).toFixed(2) || 0}}
+        %
+      </p>
+      <p v-if=" userinfo.getRealmBonus.realmCriticalDamage">
+        <span>暴击伤害加成</span>
+        {{( userinfo.getRealmBonus.realmCriticalDamage * 100).toFixed(2) ||0 }}
+        %
+      </p>
+      <p v-if=" userinfo.getRealmBonus.realmEvade">
+        <span>闪避加成</span>
+        {{ ( userinfo.getRealmBonus.realmEvade * 100).toFixed(2) || 0 }} %
+      </p>
+      <p v-if=" userinfo.getRealmBonus.realmHitRat">
+        <span>命中加成</span>
+        {{ ( userinfo.getRealmBonus.realmHitRat * 100).toFixed(2) || 0 }} %
+      </p>
+      <p v-if=" userinfo.getRealmBonus.realmSpeed">
+        <span>速度加成</span>
+        {{  userinfo.getRealmBonus.realmSpeed || 0 }}
+      </p>
+      <h1>
+        下一境界：{{ userinfo.getCaiRealm.realmName }} 需要经验：{{
+          userinfo.getCaiRealm.updateExp
+        }}需要等级：{{ userinfo.getCaiRealm.realmLevel }} 级, 升级后等级上限：{{userinfo.getCaiRealm.realmMaxLevel}}
+      </h1>
+      <h1> 需要材料：
+        <span v-if="userinfo.getCaiRealm.materOneName">
+          {{userinfo.getCaiRealm.materOneName+"*"+userinfo.getCaiRealm.materOneNum}}
+        </span>
+        <span v-if="userinfo.getCaiRealm.materTwoName">
+          {{userinfo.getCaiRealm.materTwoName+"*"+userinfo.getCaiRealm.materTwoNum}}
+        </span>
+        <span v-if="userinfo.getCaiRealm.materThreeName">
+          {{userinfo.getCaiRealm.materThreeName+"*"+userinfo.getCaiRealm.materThreeNum}}
+        </span>
+        <a-button @click="breakThroughTheRealm" size="small">
+          提升境界
+        </a-button>
+      </h1>
+
     </a-col>
 
     <a-col :xs="22" :sm="22" :md="22" :lg="8" :xl="8" :offset="1" align="left" style="font-size: 0.15rem">
@@ -204,6 +269,8 @@ export default defineComponent({
       getGameCharacterActivity: {},
       getCharaUseSkill: {},
       getCharaSkill: {},
+      getRealmBonus: {},
+      getCaiRealm: {},
     });
     const getCharaUseSkill = async () => {
       try {
@@ -215,7 +282,6 @@ export default defineComponent({
           "charaId=" + user.charaId + "&skillType=2"
         );
         userinfo.getCharaUseSkill.beidong = res.data;
-        console.log(userinfo);
       } catch (error) {
         console.log(error);
       }
@@ -236,7 +302,6 @@ export default defineComponent({
             userinfo.getCharaSkill.beidong.push(item);
           }
         });
-        console.log(userinfo);
       } catch (error) {
         console.log(error);
       }
@@ -254,7 +319,6 @@ export default defineComponent({
         res.status == 500 ? message.info(res.msg) : message.info(res.data);
         getCharaSkill();
         getCharaUseSkill();
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -283,6 +347,32 @@ export default defineComponent({
         res.status == 500 ? message.info(res.msg) : message.info(res.data);
         getCharaUseSkill();
         getCharaSkill();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const getRealmBonus = async () => {
+      try {
+        const res = await originApis.getRealmBonus("charaId=" + user.charaId);
+        userinfo.getRealmBonus = res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const getCaiRealm = async () => {
+      try {
+        const res = await originApis.getCaiRealm("charaId=" + user.charaId);
+        userinfo.getCaiRealm = res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const breakThroughTheRealm = async () => {
+      try {
+        const res = await originApis.breakThroughTheRealm(
+          "charaId=" + user.charaId
+        );
+        res.status == 500 ? message.info(res.msg) : message.info(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -342,6 +432,8 @@ export default defineComponent({
 
     if (user.charaId) {
       getGameCharacter();
+      getCaiRealm();
+      getRealmBonus();
       getGameCharacterActivity();
       getCharaUseSkill();
       getCharaSkill();
@@ -352,6 +444,9 @@ export default defineComponent({
 
     return {
       userinfo,
+      breakThroughTheRealm,
+      getCaiRealm,
+      getRealmBonus,
       makeDownSkill,
       upgradeSkill,
       makeSkill,
